@@ -116,44 +116,43 @@ The footer is 512 bytes long and consists of:
 | 12 | 4 | `0x00010000` | Format version +
 Upper 16-bits are the major version and the lower 16-bits are the minor version
 | 16 | 8 | | Next offset +
-Offset to the next (metadata) structure. The offset is relative from the start of the file. + 
-
-It should only be set in dynamic and differential disk images. +
-
+Offset to the next (metadata) structure. The offset is relative from the start of the file. 
++ 
+It should only be set in dynamic and differential disk images. 
++
 In fixed disk images it should be set to `0xffffffffffffffff` (-1).
-| 24 | 4 | | Modification time +
+| 24 | 4 | | _Modification time_ +
 Contains the number of seconds since January 1, 2000 00:00:00 UTC
-| 28 | 4 | | Creator application
-| 32 | 4 | | Creator version +
+| 28 | 4 | | _Creator application_
+| 32 | 4 | | _Creator version_ +
 Where the upper 16-bit are the major version and the lower 16-bit the minor version
-| 36 | 4 | | Creator (host) operating system
-| 40 | 8 | | Disk size +
+| 36 | 4 | | _Creator (host) operating system_
+| 40 | 8 | | _Disk size_ +
 Contains the size of the disk in bytes
-| 48 | 8 | | Data size +
+| 48 | 8 | | _Data size_ +
 Contains the size of the data in bytes
-| 56 | 4 | | Disk geometry
-| 60 | 4 | | Disk type
-| 64 | 4 | | Checksum
-| 68 | 16 | | Identifier +
+| 56 | 4 | | _Disk geometry_
+| 60 | 4 | | _Disk type_
+| 64 | 4 | | _Checksum_ +
+[yellow-background]*One’s complement of the sum of all
+the bytes in the footer without the checksum field.*
+| 68 | 16 | | _Identifier_ +
 Contains a big-endian GUID
-| 84 | 1 | | Saved state +
+| 84 | 1 | | _Saved state_ +
 Flag to indicate the image is in saved state.
 | 85 | 427 | 0 | Reserved (empty values)
 |===
-
-[yellow-background]*Checksum. It is just a one’s complement of the sum of all
-the bytes in the footer without the checksum field.*
 
 === Features
 
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| `0x00000000` | | No features enabled
-| `0x00000001` | | Is temporary disk +
+| `0x00000000` | | _No features enabled_
+| `0x00000001` | | _Is temporary disk_ +
 [yellow-background]*Indicates that this disk is a candidate for deletion on shutdown*
-| `0x00000002` | | Reserved +
-Must always be set to 1
+| `0x00000002` | | _Reserved_ +
+Must always be set to `1`
 |===
 
 All other bits are also reserved and should be set to 0.
@@ -216,9 +215,11 @@ The dynamic disk header is 1024 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 8 | `cxsparse` | Signature (Cookie)
-| 8 | 8 | | Next offset +
-Offset to the next (metadata) structure. The offset is relative from the start of the file. Currently this is unused and should be set to 0xffffffffffffffff (-1).
+| 0 | 8 | `cxsparse` | _Signature (Cookie)_
+| 8 | 8 | | _Next offset_ +
+Offset to the next (metadata) structure. The offset is relative from the start of the file.
++
+Currently this is unused and should be set to `0xffffffffffffffff` (-1).
 | 16 | 8 | | Block table offset +
 Offset to the block table structure. The offset is relative from the start of the file.
 | 24 | 4 | `0x00010000` | Format version +
@@ -230,17 +231,21 @@ Maximum number of block table entries
 [yellow-background]*Does not include the size of the data block bitmap.*
 | 36 | 4 | | Checksum
 | 40 | 16 | | Parent identifier +
-The identifier of the parent. +
-Contains a big-endian GUID +
+The identifier of the parent. 
++
+Contains a big-endian GUID 
++
 Only used by differential hard disk images.
-| 56 | 4 | | Parent modification time +
-Contains the number of seconds since January 1, 2000 00:00:00 UTC +
+| 56 | 4 | | _Parent modification time_ +
+Contains the number of seconds since January 1, 2000 00:00:00 UTC 
++
 Only used by differential hard disk images.
-| 60 | 4 | | Reserved (empty values)
-| 64 | 512 | | Parent name +
-Contains an UTF-16 big-endian string +
+| 60 | 4 | | _Reserved (empty values)_
+| 64 | 512 | | _Parent name_ +
+Contains an UTF-16 big-endian string 
++
 Only used by differential hard disk images.
-| 576 | 8*24 = 192 | | Array of parent locator entries +
+| 576 | 8*24 = 192 | | _Array of parent locator entries_ +
 Only used by differential hard disk images.
 | 768 | 256 | | Reserved (empty values)
 |===
