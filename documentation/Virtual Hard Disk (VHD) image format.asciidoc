@@ -242,14 +242,14 @@ Only used by differential hard disk images.
 Contains the number of seconds since January 1, 2000 00:00:00 UTC 
 +
 Only used by differential hard disk images.
-| 60 | 4 | | *_Reserved (empty values)_*
+| 60 | 4 | | _Reserved_ *(empty values)*
 | 64 | 512 | | _Parent name_ +
 Contains an UTF-16 big-endian string 
 +
 Only used by differential hard disk images.
 | 576 | 8*24=192 | | _Array of parent locator entries_ +
 Only used by differential hard disk images.
-| 768 | 256 | | *_Reserved (empty values)_*
+| 768 | 256 | | _Reserved_ *(empty values)*
 |===
 
 The maximum number of block table entries should match the maximum possible
@@ -269,7 +269,7 @@ The parent locator entry is 24 bytes long and consists of:
 | 4 | 4 | | _Platform data space_ +
 Number of 512-byte sectors needed to store the parent hard disk locator.
 | 8 | 4 | | Locator data size
-| 12 | 4 | 0 | _Reserved (empty values)_
+| 12 | 4 | 0 | _Reserved_ *(empty values)*
 | 16 | 8 | | _Locator data offset_ +
 Offset to the locator data. The offset is relative from the start of the file.
 |===
