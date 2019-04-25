@@ -201,12 +201,12 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 |===
 | Value | Identifier | Description
 | 0 | | None
-| 1 | | *_Reserved (deprecated)_*
+| 1 | | _Reserved_ *(deprecated)*
 | 2 | | Fixed hard disk
 | 3 | | Dynamic hard disk
 | 4 | | Differential hard disk
-| 5 | | *_Reserved (deprecated)_*
-| 6 | | *_Reserved (deprecated)_*
+| 5 | | _Reserved_ *(deprecated)*
+| 6 | | _Reserved_ *(deprecated)*
 |===
 
 == Dynamic disk header
@@ -286,8 +286,8 @@ Offset to the locator data. The offset is relative from the start of the file.
 | | |
 | `W2ku` | | Absolute Unicode (UTF-16) pathname on Windows.
 | `W2ru` | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
-| `Wi2k` | | *_(deprecated)_*
-| `Wi2r` | Wi2r | *_(deprecated)_*
+| `Wi2k` | | *(deprecated)*
+| `Wi2r` | Wi2r | *(deprecated)*
 |===
 
 == Block table
