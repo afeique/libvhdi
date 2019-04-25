@@ -111,8 +111,8 @@ The footer is 512 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 8 | "conectix" | _Signature (Cookie)_
-| 8 | 4 | | _Features_
+| 0 | 8 | "conectix" | Signature (Cookie)
+| 8 | 4 | | Features
 | 12 | 4 | `0x00010000` | _Format version_ +
 Upper 16-bits are the major version and the lower 16-bits are the minor version
 | 16 | 8 | | _Next offset_ +
@@ -133,9 +133,9 @@ In bytes
 In bytes
 | 56 | 4 | | _Disk geometry_ +
 Metadata structure, see below
-| 60 | 4 | | _Disk type_
+| 60 | 4 | | Disk type
 | 64 | 4 | | _Checksum_ +
-*One’s complement of the sum of all the bytes in the footer without the checksum field.*
+One's complement of the sum of all the bytes in the footer without the checksum field.
 | 68 | 16 | | _Identifier_ +
 Contains a big-endian GUID
 | 84 | 1 | | _Saved state_ +
@@ -150,7 +150,7 @@ Flag to indicate the image is in saved state.
 | Value | Identifier | Description
 | `0x00000000` | | _No features enabled_
 | `0x00000001` | | _Is temporary disk_ +
-*Indicates that this disk is a candidate for deletion on shutdown*
+Indicates disk is a candidate for deletion on shutdown
 | `0x00000002` | | *_Reserved_* +
 Must always be set to `1`
 |===
@@ -183,9 +183,9 @@ The disk geometry metadata is 4 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 2 | | _Number of cylinders_
-| 2 | 1 | | _Number of heads_
-| 3 | 1 | | _Number of sectors per track (cylinder)_
+| 0 | 2 | | Number of cylinders
+| 2 | 1 | | Number of heads
+| 3 | 1 | | Number of sectors per track (cylinder)
 |===
 
 *When a hard disk is configured as an ATA hard disk, the CHS
@@ -200,11 +200,11 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| 0 | | _None_
+| 0 | | None
 | 1 | | *_Reserved (deprecated)_*
-| 2 | | _Fixed hard disk_
-| 3 | | _Dynamic hard disk_
-| 4 | | _Differential hard disk_
+| 2 | | Fixed hard disk
+| 3 | | Dynamic hard disk
+| 4 | | Differential hard disk
 | 5 | | *_Reserved (deprecated)_*
 | 6 | | *_Reserved (deprecated)_*
 |===
@@ -215,7 +215,7 @@ The dynamic disk header is 1024 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 8 | `cxsparse` | _Signature (Cookie)_
+| 0 | 8 | `cxsparse` | Signature (Cookie)
 | 8 | 8 | | _Next offset_ +
 Offset to the next (metadata) structure. The offset is relative from the start of the file.
 +
@@ -231,7 +231,7 @@ Must be a power-of-two multiple of the sector size. The default block size is 40
 +
 Does not include the size of the data block bitmap.
 | 36 | 4 | | _Checksum_ +
-*One’s complement of the sum of all the bytes in the footer without the checksum field.*
+One's complement of the sum of all the bytes in the footer without the checksum field.
 | 40 | 16 | | _Parent identifier_ +
 The identifier of the parent. 
 +
@@ -265,9 +265,9 @@ The parent locator entry is 24 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 4 | | _Locator platform code_
+| 0 | 4 | | Locator platform code
 | 4 | 4 | | _Platform data space_ +
-*Number of 512-byte sectors needed to store the parent hard disk locator.*
+Number of 512-byte sectors needed to store the parent hard disk locator.
 | 8 | 4 | | Locator data size
 | 12 | 4 | 0 | _Reserved (empty values)_
 | 16 | 8 | | _Locator data offset_ +
