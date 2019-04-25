@@ -111,11 +111,11 @@ The footer is 512 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 8 | "conectix" | Signature (Cookie)
-| 8 | 4 | | Features
-| 12 | 4 | `0x00010000` | Format version +
+| 0 | 8 | "conectix" | _Signature (Cookie)_
+| 8 | 4 | | _Features_
+| 12 | 4 | `0x00010000` | _Format version_ +
 Upper 16-bits are the major version and the lower 16-bits are the minor version
-| 16 | 8 | | Next offset +
+| 16 | 8 | | _Next offset_ +
 Offset to the next (metadata) structure. The offset is relative from the start of the file. 
 + 
 It should only be set in dynamic and differential disk images. 
@@ -183,9 +183,9 @@ The disk geometry metadata is 4 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 2 | | Number of cylinders
-| 2 | 1 | | Number of heads
-| 3 | 1 | | Number of sectors per track (cylinder)
+| 0 | 2 | | _Number of cylinders_
+| 2 | 1 | | _Number of heads_
+| 3 | 1 | | _Number of sectors per track (cylinder)_
 |===
 
 [yellow-background]*When a hard disk is configured as an ATA hard disk, the CHS
@@ -200,11 +200,11 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| 0 | | None
+| 0 | | _None_
 | 1 | | [yellow-background]*Reserved (deprecated)*
-| 2 | | Fixed hard disk
-| 3 | | Dynamic hard disk
-| 4 | | Differential hard disk
+| 2 | | _Fixed hard disk_
+| 3 | | _Dynamic hard disk_
+| 4 | | _Differential hard disk_
 | 5 | | [yellow-background]*Reserved (deprecated)*
 | 6 | | [yellow-background]*Reserved (deprecated)*
 |===
@@ -220,17 +220,19 @@ The dynamic disk header is 1024 bytes long and consists of:
 Offset to the next (metadata) structure. The offset is relative from the start of the file.
 +
 Currently this is unused and should be set to `0xffffffffffffffff` (-1).
-| 16 | 8 | | Block table offset +
+| 16 | 8 | | _Block table offset_ +
 Offset to the block table structure. The offset is relative from the start of the file.
 | 24 | 4 | `0x00010000` | Format version +
 Where the upper 16-bit are the major version and the lower 16-bit the minor version
-| 28 | 4 | | Number of blocks +
+| 28 | 4 | | _Number of blocks_ +
 Maximum number of block table entries
 | 32 | 4 | | Block size +
 [yellow-background]*The block size must be a power-of-two multitude of the sector size. The default block size is 4096 x 512-byte sectors (2 MB).* +
 [yellow-background]*Does not include the size of the data block bitmap.*
-| 36 | 4 | | Checksum
-| 40 | 16 | | Parent identifier +
+| 36 | 4 | | _Checksum_ +
+[yellow-background]*One’s complement of the sum of all
+the bytes in the footer without the checksum field.*
+| 40 | 16 | | _Parent identifier_ +
 The identifier of the parent. 
 +
 Contains a big-endian GUID 
@@ -256,9 +258,6 @@ number of blocks in the disk.
 [NOTE]
 The parent name can also contain a full path, e.g. in .avhd files. The part
 segments are separated by the `\` character.
-
-[yellow-background]*Checksum. It is just a one’s complement of the sum of all
-the bytes in the footer without the checksum field.*
 
 === Parent locator entry
 The parent locator entry is 24 bytes long and consists of:
