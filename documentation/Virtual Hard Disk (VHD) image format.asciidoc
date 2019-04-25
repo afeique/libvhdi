@@ -147,12 +147,12 @@ Flag to indicate the image is in saved state.
 
 [cols="1,1,5",options="header"]
 |===
-| Value | Identifier | Description
-| `0x00000000` | | No features enabled
-| `0x00000001` | | _Is temporary disk_ +
-Indicates disk is a candidate for deletion on shutdown
-| `0x00000002` | | _Reserved_ +
-Must always be set to `1`
+| Feature | Hex Value
+| No features enabled | `0x00000000` |
+| _Is temporary disk_ +
+Indicates disk is a candidate for deletion on shutdown | `0x00000001`
+| _Reserved_ +
+Must always be set to `1` | `0x00000002`
 |===
 
 All other bits are also reserved and should be set to 0.
