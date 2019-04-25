@@ -247,7 +247,7 @@ Only used by differential hard disk images.
 Contains an UTF-16 big-endian string 
 +
 Only used by differential hard disk images.
-| 576 | 8*24 = 192 | | _Array of parent locator entries_ +
+| 576 | 8*24=192 | | _Array of parent locator entries_ +
 Only used by differential hard disk images.
 | 768 | 256 | | *_Reserved (empty values)_*
 |===
