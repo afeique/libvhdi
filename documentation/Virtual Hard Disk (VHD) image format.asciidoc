@@ -171,30 +171,30 @@ All other bits are also reserved and should be set to 0.
 
 === Creator host operating system
 
-[cols="1,1,5",options="header"]
+[cols="5,1,1",options="header"]
 |===
-| Value | Hex | OS
-| `Mac\x20` | `0x4d616320` | Macintosh
-| `Wi2k` | `0x5769326b` | Windows
+| Host OS | Value | Hex | 
+| Macintosh | `Mac\x20` | `0x4d616320`
+| Windows | `Wi2k` | `0x5769326b`
 |===
 
 === Disk geometry
 The disk geometry metadata is 4 bytes long and consists of:
 
-[cols="1,1,1,5",options="header"]
+[cols="1,1,5",options="header"]
 |===
-| Offset | Size | Value | Description
-| 0 | 2 | | Number of cylinders
-| 2 | 1 | | Number of heads
-| 3 | 1 | | Number of sectors per track (cylinder)
+| Field | Offset | Size (in bytes)
+| Cylinders | 0 | 2
+| Heads | 2 | 1 
+| Sectors per track/cylinder | 3 | 1
 |===
 
-*When a hard disk is configured as an ATA hard disk, the CHS
+When a hard disk is configured as an ATA hard disk, the CHS
 values (that is, Cylinder, Heads, Sectors per track) are used by the ATA
 controller to determine the size of the disk. 
 
 When the user creates a hard disk of a certain size, the size of the hard disk image in the virtual machine is smaller than that created by the user. This is because CHS value calculated from the hard disk size is rounded down. The pseudo-code for the algorithm used
-to determine the CHS values can be found in the appendix of `[TECHNET]`.*
+to determine the CHS values can be found in the appendix of `[TECHNET]`.
 
 === Disk type
 
