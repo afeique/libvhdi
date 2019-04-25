@@ -128,19 +128,19 @@ Contains the number of seconds since January 1, 2000 00:00:00 UTC
 Where the upper 16-bit are the major version and the lower 16-bit the minor version
 | 36 | 4 | | _Creator (host) operating system_
 | 40 | 8 | | _Disk size_ +
-Contains the size of the disk in bytes
+In bytes
 | 48 | 8 | | _Data size_ +
-Contains the size of the data in bytes
-| 56 | 4 | | _Disk geometry_
+In bytes
+| 56 | 4 | | _Disk geometry_ +
+Metadata structure, see below
 | 60 | 4 | | _Disk type_
 | 64 | 4 | | _Checksum_ +
-[yellow-background]*One’s complement of the sum of all
-the bytes in the footer without the checksum field.*
+*One’s complement of the sum of all the bytes in the footer without the checksum field.*
 | 68 | 16 | | _Identifier_ +
 Contains a big-endian GUID
 | 84 | 1 | | _Saved state_ +
 Flag to indicate the image is in saved state.
-| 85 | 427 | 0 | Reserved (empty values)
+| 85 | 427 | 0 | _*Reserved (empty values)*_
 |===
 
 === Features
@@ -150,8 +150,8 @@ Flag to indicate the image is in saved state.
 | Value | Identifier | Description
 | `0x00000000` | | _No features enabled_
 | `0x00000001` | | _Is temporary disk_ +
-[yellow-background]*Indicates that this disk is a candidate for deletion on shutdown*
-| `0x00000002` | | _Reserved_ +
+*Indicates that this disk is a candidate for deletion on shutdown*
+| `0x00000002` | | _*Reserved*_ +
 Must always be set to `1`
 |===
 
@@ -188,7 +188,7 @@ The disk geometry metadata is 4 bytes long and consists of:
 | 3 | 1 | | _Number of sectors per track (cylinder)_
 |===
 
-[yellow-background]*When a hard disk is configured as an ATA hard disk, the CHS
+*When a hard disk is configured as an ATA hard disk, the CHS
 values (that is, Cylinder, Heads, Sectors per track) are used by the ATA
 controller to determine the size of the disk. 
 
@@ -201,12 +201,12 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 |===
 | Value | Identifier | Description
 | 0 | | _None_
-| 1 | | [yellow-background]*Reserved (deprecated)*
+| 1 | | _*Reserved (deprecated)*_
 | 2 | | _Fixed hard disk_
 | 3 | | _Dynamic hard disk_
 | 4 | | _Differential hard disk_
-| 5 | | [yellow-background]*Reserved (deprecated)*
-| 6 | | [yellow-background]*Reserved (deprecated)*
+| 5 | | _*Reserved (deprecated)*_
+| 6 | | _*Reserved (deprecated)*_
 |===
 
 == Dynamic disk header
@@ -222,16 +222,16 @@ Offset to the next (metadata) structure. The offset is relative from the start o
 Currently this is unused and should be set to `0xffffffffffffffff` (-1).
 | 16 | 8 | | _Block table offset_ +
 Offset to the block table structure. The offset is relative from the start of the file.
-| 24 | 4 | `0x00010000` | Format version +
+| 24 | 4 | `0x00010000` | _Format version_ +
 Where the upper 16-bit are the major version and the lower 16-bit the minor version
 | 28 | 4 | | _Number of blocks_ +
 Maximum number of block table entries
-| 32 | 4 | | Block size +
-[yellow-background]*The block size must be a power-of-two multitude of the sector size. The default block size is 4096 x 512-byte sectors (2 MB).* +
-[yellow-background]*Does not include the size of the data block bitmap.*
+| 32 | 4 | | _Block size_ +
+Must be a power-of-two multiple of the sector size. The default block size is 4096 x 512-byte sectors (2 MiB).
++
+Does not include the size of the data block bitmap.
 | 36 | 4 | | _Checksum_ +
-[yellow-background]*One’s complement of the sum of all
-the bytes in the footer without the checksum field.*
+*One’s complement of the sum of all the bytes in the footer without the checksum field.*
 | 40 | 16 | | _Parent identifier_ +
 The identifier of the parent. 
 +
@@ -242,14 +242,14 @@ Only used by differential hard disk images.
 Contains the number of seconds since January 1, 2000 00:00:00 UTC 
 +
 Only used by differential hard disk images.
-| 60 | 4 | | _Reserved (empty values)_
+| 60 | 4 | | _*Reserved (empty values)*_
 | 64 | 512 | | _Parent name_ +
 Contains an UTF-16 big-endian string 
 +
 Only used by differential hard disk images.
 | 576 | 8*24 = 192 | | _Array of parent locator entries_ +
 Only used by differential hard disk images.
-| 768 | 256 | | Reserved (empty values)
+| 768 | 256 | | _*Reserved (empty values)*_
 |===
 
 The maximum number of block table entries should match the maximum possible
@@ -265,12 +265,12 @@ The parent locator entry is 24 bytes long and consists of:
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 4 | | Locator platform code
-| 4 | 4 | | [yellow-background]*Platform data space* +
-[yellow-background]*This field stores the number of 512-byte sectors needed to store the parent hard disk locator.*
+| 0 | 4 | | _Locator platform code_
+| 4 | 4 | | _Platform data space_ +
+*Number of 512-byte sectors needed to store the parent hard disk locator.*
 | 8 | 4 | | Locator data size
-| 12 | 4 | 0 | Reserved (empty values)
-| 16 | 8 | | Locator data offset +
+| 12 | 4 | 0 | _Reserved (empty values)_
+| 16 | 8 | | _Locator data offset_ +
 Offset to the locator data. The offset is relative from the start of the file.
 |===
 
@@ -286,8 +286,8 @@ Offset to the locator data. The offset is relative from the start of the file.
 | | |
 | `W2ku` | | Absolute Unicode (UTF-16) pathname on Windows.
 | `W2ru` | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
-| `Wi2k` | | [yellow-background]*(deprecated)*
-| `Wi2r` | Wi2r | [yellow-background]*(deprecated)*
+| `Wi2k` | | _*(deprecated)*_
+| `Wi2r` | Wi2r | _*(deprecated)*_
 |===
 
 == Block table
@@ -304,8 +304,7 @@ else:
 ....
 
 Unused block in a dynamic disk are sparse and should be filled with zero byte
-values. [yellow-background]*In a differential disks the sparse block is defined
-in the parent disk image.*
+values. *In differential disks, the sparse block is defined in the parent disk image.*
 
 == Data blocks
 Data blocks are only used in dynamic and differential disk images.
