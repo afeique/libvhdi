@@ -7,14 +7,10 @@ Analysis of the Virtual PC VHD format
 :numbered!:
 [abstract]
 == Summary
-A commonly image format used in Microsoft virtualization products is the
-Virtual Hard Disk (VHD) Image format. It is both used the store hard disk
-images and snapshots. This specification is based on available documentation
-and was enhanced by analyzing test images.
+The Virtual Hard Disk (VHD) Image format is used in older Microsoft virtualization products. It is used to store both hard disk images and differential snapshots. This specification is based on available documentation and analysis of test images.
 
 This document is intended as a working document for the Virtual Hard Disk (VHD)
-Image format. Which should allow existing Open Source forensic tooling to be
-able to process this type of disk image format.
+Image format. It should be of use for people writing software to process this type of disk image format.
 
 [preface]
 == Document information
@@ -49,16 +45,14 @@ in the section entitled "GNU Free Documentation License".
 | 0.0.5 | J.B. Metz | December 2013 | Additional information about parent name.
 | 0.0.6 | J.B. Metz | October 2014 | Switched to asccidoc format.
 | 0.0.7 | J.B. Metz | November 2016 | Textual changes.
+| 0.0.8 | A. Sheikh | April 2019 | Cleanup.  
 |===
 
 :numbered:
 == Overview
-A commonly image format used in Microsoft vitualization products is the Virtual
-Hard Disk (VHD) Image format. It is both used the store hard disk images and
-and snapshots. The format is the main format used by e.g. Virtual PC,
-Virtual Server and Hyper-V Server.
+The Microsoft Virtual Hard Disk (VHD) Image is the primary format used by e.g. Microsoft Virtual PC, Microsoft Virtual Server, and Microsoft Hyper-V Server.
 
-Types of images:
+Supported image types:
 
 * Fixed-size hard disk image
 * Dynamic-size (or sparse) hard disk image
@@ -73,8 +67,7 @@ Types of images:
 |===
 
 === Test version
-The following version of programs were used to test the information within this
-document:
+The following programs were used to test the information provided in this document:
 
 * Virtual PC
 
@@ -120,10 +113,10 @@ The footer is 512 bytes of size and consists of:
 | Offset | Size | Value | Description
 | 0 | 8 | "conectix" | Signature (Cookie)
 | 8 | 4 | | Features
-| 12 | 4 | 0x00010000 | Format version +
-Where the upper 16-bit are the major version and the lower 16-bit the minor version
+| 12 | 4 | `0x00010000` | Format version +
+Where the upper 16-bits are the major version and the lower 16-bits are the minor version
 | 16 | 8 | | Next offset +
-Offset to the next (metadata) structure. The offset is relative from the start of the file. It should only be set in dynamic and differential disk images. In fixed disk images it should be set to 0xffffffffffffffff (-1).
+Offset to the next (metadata) structure. The offset is relative from the start of the file. It should only be set in dynamic and differential disk images. In fixed disk images it should be set to `0xffffffffffffffff` (-1).
 | 24 | 4 | | Modification time +
 Contains the number of seconds since January 1, 2000 00:00:00 UTC
 | 28 | 4 | | Creator application
@@ -152,10 +145,10 @@ the bytes in the footer without the checksum field.*
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| 0x00000000 | | No features enabled
-| 0x00000001 | | Is temporary disk +
+| `0x00000000` | | No features enabled
+| `0x00000001` | | Is temporary disk +
 [yellow-background]*Indicates that this disk is a candidate for deletion on shutdown*
-| 0x00000002 | | Reserved +
+| `0x00000002` | | Reserved +
 Must always be set to 1
 |===
 
@@ -166,23 +159,23 @@ All other bits are also reserved and should be set to 0.
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| "d2v\x00" | | Disk2vhd
-| "qemu" | | Qemu
-| "vpc\x20" | | Virtual PC
-| "vs\x20\x20" | | Virtual Server
-| "win\x20" | | Windows (Disk Management)
+| `d2v\x00` | | Disk2vhd
+| `qemu` | | Qemu
+| `vpc\x20` | | Virtual PC
+| `vs\x20\x20` | | Virtual Server
+| `win\x20` | | Windows (Disk Management)
 |===
 
 === Creator host operating system
 
 [cols="1,1,5",options="header"]
 |===
-| "Mac\x20" | | Macintosh
-| "Wi2k" | | Windows
+| `Mac\x20` | | Macintosh
+| `Wi2k` | | Windows
 |===
 
 === Disk geometry
-The disk geometry is 4 bytes of size and consists of:
+The disk geometry metadata is 4 bytes long and consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -194,10 +187,9 @@ The disk geometry is 4 bytes of size and consists of:
 
 [yellow-background]*When a hard disk is configured as an ATA hard disk, the CHS
 values (that is, Cylinder, Heads, Sectors per track) are used by the ATA
-controller to determine the size of the disk. When the user creates a hard disk
-of a certain size, the size of the hard disk image in the virtual machine is
-smaller than that created by the user. This is because CHS value calculated
-from the hard disk size is rounded down. The pseudo-code for the algorithm used
+controller to determine the size of the disk. 
+
+When the user creates a hard disk of a certain size, the size of the hard disk image in the virtual machine is smaller than that created by the user. This is because CHS value calculated from the hard disk size is rounded down. The pseudo-code for the algorithm used
 to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 
 === Disk type
@@ -215,17 +207,17 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 |===
 
 == Dynamic disk header
-The dynamic disk header is 1024 bytes of size and consists of:
+The dynamic disk header is 1024 bytes long and consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
 | Offset | Size | Value | Description
-| 0 | 8 | "cxsparse" | Signature (Cookie)
+| 0 | 8 | `cxsparse` | Signature (Cookie)
 | 8 | 8 | | Next offset +
 Offset to the next (metadata) structure. The offset is relative from the start of the file. Currently this is unused and should be set to 0xffffffffffffffff (-1).
 | 16 | 8 | | Block table offset +
 Offset to the block table structure. The offset is relative from the start of the file.
-| 24 | 4 | 0x00010000 | Format version +
+| 24 | 4 | `0x00010000` | Format version +
 Where the upper 16-bit are the major version and the lower 16-bit the minor version
 | 28 | 4 | | Number of blocks +
 Maximum number of block table entries
@@ -244,7 +236,7 @@ Only used by differential hard disk images.
 | 64 | 512 | | Parent name +
 Contains an UTF-16 big-endian string +
 Only used by differential hard disk images.
-| 576 | 8 x 24 = 192 | | Array of parent locator entries +
+| 576 | 8*24 = 192 | | Array of parent locator entries +
 Only used by differential hard disk images.
 | 768 | 256 | | Reserved (empty values)
 |===
@@ -254,13 +246,13 @@ number of blocks in the disk.
 
 [NOTE]
 The parent name can also contain a full path, e.g. in .avhd files. The part
-segments are separated by the \ character.
+segments are separated by the `\` character.
 
 [yellow-background]*Checksum. It is just a one’s complement of the sum of all
 the bytes in the footer without the checksum field.*
 
 === Parent locator entry
-The parent locator entry is 24 bytes of size and consists of:
+The parent locator entry is 24 bytes long and consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -281,20 +273,20 @@ Offset to the locator data. The offset is relative from the start of the file.
 | Value | Identifier | Description
 | 0 | | None
 | | |
-| "Max\x20" | | Mac OS alias stored as a blob
-| "MacX" | | A file URL with UTF-8 encoding conforming to RFC 2396.
+| `Max\x20` | | Mac OS alias stored as a blob
+| `MacX` | | A file URL with UTF-8 encoding conforming to RFC 2396.
 | | |
-| "W2ku" | | Absolute Unicode (UTF-16) pathname on Windows.
-| "W2ru" | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
-| "Wi2k" | | [yellow-background]*(deprecated)*
-| "Wi2r" | Wi2r | [yellow-background]*(deprecated)*
+| `W2ku` | | Absolute Unicode (UTF-16) pathname on Windows.
+| `W2ru` | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
+| `Wi2k` | | [yellow-background]*(deprecated)*
+| `Wi2r` | Wi2r | [yellow-background]*(deprecated)*
 |===
 
 == Block table
 The block table is only used in dynamic and differential disk images.
 
 The block table consists of 32-bit entries. The entries represent the sector
-number where the data block starts or unused when set to 0xffffffff (-1).
+number where the data block starts or is unused when set to `0xffffffff` (-1).
 
 ....
 if block table entry == 0xffffffff (-1):
@@ -319,14 +311,15 @@ A data block consists of:
 size of bitmap (in bytes) = block size / ( 512 * 8 )
 ....
 
-The size of the bitmap is rounded up to the next multitude of the sector size.
+The size of the bitmap is rounded up to the next multiple of the sector size.
 
 === Data block sector bitmap
 In dynamic disk images the sector bitmap indicates which sectors contain data
-(bit set to 1) or are sparse (bit set to 0).
+(bit set to 1) and which sectors are sparse (bit set to 0).
 
 In differential disk images the sector bitmap indicates which sectors are
-stored within the image (bit set to 1) or in the parent (bit set to 0).
+stored within the image (bit set to 1) and which sectors are stored in the 
+parent (bit set to 0).
 
 The bitmap is padded to a 512-byte sector boundary.
 
