@@ -148,7 +148,7 @@ Flag to indicate the image is in saved state.
 [cols="1,1,5",options="header"]
 |===
 | Feature | Hex Value
-| No features enabled | `0x00000000` |
+| No features enabled | `0x00000000`
 | _Is temporary disk_ +
 Indicates disk is a candidate for deletion on shutdown | `0x00000001`
 | _Reserved_ +
@@ -173,7 +173,7 @@ All other bits are also reserved and should be set to 0.
 
 [cols="5,1,1",options="header"]
 |===
-| Host OS | Value | Hex | 
+| Host OS | Value | Hex
 | Macintosh | `Mac\x20` | `0x4d616320`
 | Windows | `Wi2k` | `0x5769326b`
 |===
