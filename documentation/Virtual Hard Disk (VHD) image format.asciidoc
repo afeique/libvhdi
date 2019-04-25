@@ -43,7 +43,7 @@ in the section entitled "GNU Free Documentation License".
 | 0.0.3 | J.B. Metz | May 2013 | Small changes.
 | 0.0.4 | J.B. Metz | May 2013 | Additional information about undo disks.
 | 0.0.5 | J.B. Metz | December 2013 | Additional information about parent name.
-| 0.0.6 | J.B. Metz | October 2014 | Switched to asccidoc format.
+| 0.0.6 | J.B. Metz | October 2014 | Switched to asciidoc format.
 | 0.0.7 | J.B. Metz | November 2016 | Textual changes.
 | 0.0.8 | A. Sheikh | April 2019 | Cleanup.  
 |===
@@ -136,8 +136,8 @@ Metadata structure, see below
 | 60 | 4 | | Disk type
 | 64 | 4 | | _Checksum_ +
 One's complement of the sum of all the bytes in the footer without the checksum field.
-| 68 | 16 | | _Identifier_ +
-Contains a big-endian GUID
+| 68 | 16 | | _Unique ID_ +
+Contains a 128-bit big-endian GUID
 | 84 | 1 | | _Saved state_ +
 Flag to indicate the image is in saved state.
 | 85 | 427 | 0 | *_Reserved (empty values)_*
@@ -148,10 +148,10 @@ Flag to indicate the image is in saved state.
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| `0x00000000` | | _No features enabled_
+| `0x00000000` | | No features enabled
 | `0x00000001` | | _Is temporary disk_ +
 Indicates disk is a candidate for deletion on shutdown
-| `0x00000002` | | *_Reserved_* +
+| `0x00000002` | | _Reserved_ +
 Must always be set to `1`
 |===
 
@@ -161,20 +161,21 @@ All other bits are also reserved and should be set to 0.
 
 [cols="1,1,5",options="header"]
 |===
-| Value | Identifier | Description
-| `d2v\x00` | | Disk2vhd
-| `qemu` | | Qemu
-| `vpc\x20` | | Virtual PC
-| `vs\x20\x20` | | Virtual Server
-| `win\x20` | | Windows (Disk Management)
+| Value | Hex | Description
+| `d2v\x00` | `0x64327600` | Disk2vhd
+| `qemu` | `0x71656d75` | Qemu
+| `vpc\x20` | `0x76706320` | Virtual PC
+| `vs\x20\x20` | `0x76732020` | Virtual Server
+| `win\x20` | `0x77696e20` | Windows (Disk Management)
 |===
 
 === Creator host operating system
 
 [cols="1,1,5",options="header"]
 |===
-| `Mac\x20` | | Macintosh
-| `Wi2k` | | Windows
+| Value | Hex | OS
+| `Mac\x20` | `0x4d616320` | Macintosh
+| `Wi2k` | `0x5769326b` | Windows
 |===
 
 === Disk geometry
@@ -278,16 +279,16 @@ Offset to the locator data. The offset is relative from the start of the file.
 
 [cols="1,1,5",options="header"]
 |===
-| Value | Identifier | Description
+| Value | Hex | Description
 | 0 | | None
 | | |
-| `Max\x20` | | Mac OS alias stored as a blob
-| `MacX` | | A file URL with UTF-8 encoding conforming to RFC 2396.
+| `Max\x20` | `0x4d617820` | Mac OS alias stored as a blob
+| `MacX` | `0x4d616358` | A file URL with UTF-8 encoding conforming to RFC 2396.
 | | |
-| `W2ku` | | Absolute Unicode (UTF-16) pathname on Windows.
-| `W2ru` | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
-| `Wi2k` | | *(deprecated)*
-| `Wi2r` | Wi2r | *(deprecated)*
+| `W2ku` | `0x57326b75` | Absolute Unicode (UTF-16) pathname on Windows.
+| `W2ru` | `0x57327275` | Unicode path (UTF-16) on Windows relative to the differential disk path.
+| `Wi2k` | `0x5769326b` | *(deprecated)*
+| `Wi2r` | `0x57693272` | *(deprecated)*
 |===
 
 == Block table
