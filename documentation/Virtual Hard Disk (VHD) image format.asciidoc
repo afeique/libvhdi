@@ -54,9 +54,9 @@ The Microsoft Virtual Hard Disk (VHD) Image is the primary format used by e.g. M
 
 Supported image types:
 
-* Fixed-size hard disk image
-* Dynamic-size (or sparse) hard disk image
-* Differential (or differencing) hard disk image
+* Fixed-size hard disk images
+* Dynamic-size (or sparse) hard disk images
+* Differential (or differencing) hard disk images
 
 [cols="1,5",options="header"]
 |===
@@ -97,12 +97,12 @@ The differential (or differencing) hard disk image consists of:
 
 === Undo disk image
 Virtual PC has a feature to create "Undo Disks". This undo disk feature stores
-a differential hard disk image in files named something similar like:
+a differential hard disk image in files named like:
 ....
 VirtualPCUndo_<name>_0_0_hhmmssMMDDYYYY.vud
 ....
 
-Where the date and time seems to be stored in UTC and <name> represents the
+Where the date and time seems to be stored in UTC and <name> is the
 name of the parent image.
 
 == Footer
@@ -114,9 +114,13 @@ The footer is 512 bytes long and consists of:
 | 0 | 8 | "conectix" | Signature (Cookie)
 | 8 | 4 | | Features
 | 12 | 4 | `0x00010000` | Format version +
-Where the upper 16-bits are the major version and the lower 16-bits are the minor version
+Upper 16-bits are the major version and the lower 16-bits are the minor version
 | 16 | 8 | | Next offset +
-Offset to the next (metadata) structure. The offset is relative from the start of the file. It should only be set in dynamic and differential disk images. In fixed disk images it should be set to `0xffffffffffffffff` (-1).
+Offset to the next (metadata) structure. The offset is relative from the start of the file. + 
+
+It should only be set in dynamic and differential disk images. +
+
+In fixed disk images it should be set to `0xffffffffffffffff` (-1).
 | 24 | 4 | | Modification time +
 Contains the number of seconds since January 1, 2000 00:00:00 UTC
 | 28 | 4 | | Creator application
