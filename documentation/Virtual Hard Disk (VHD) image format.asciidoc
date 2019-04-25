@@ -140,7 +140,7 @@ Metadata structure, see below
 Contains a big-endian GUID
 | 84 | 1 | | _Saved state_ +
 Flag to indicate the image is in saved state.
-| 85 | 427 | 0 | _*Reserved (empty values)*_
+| 85 | 427 | 0 | *_Reserved (empty values)_*
 |===
 
 === Features
@@ -151,7 +151,7 @@ Flag to indicate the image is in saved state.
 | `0x00000000` | | _No features enabled_
 | `0x00000001` | | _Is temporary disk_ +
 *Indicates that this disk is a candidate for deletion on shutdown*
-| `0x00000002` | | _*Reserved*_ +
+| `0x00000002` | | *_Reserved_* +
 Must always be set to `1`
 |===
 
@@ -201,12 +201,12 @@ to determine the CHS values can be found in the appendix of `[TECHNET]`.*
 |===
 | Value | Identifier | Description
 | 0 | | _None_
-| 1 | | _*Reserved (deprecated)*_
+| 1 | | *_Reserved (deprecated)_*
 | 2 | | _Fixed hard disk_
 | 3 | | _Dynamic hard disk_
 | 4 | | _Differential hard disk_
-| 5 | | _*Reserved (deprecated)*_
-| 6 | | _*Reserved (deprecated)*_
+| 5 | | *_Reserved (deprecated)_*
+| 6 | | *_Reserved (deprecated)_*
 |===
 
 == Dynamic disk header
@@ -242,14 +242,14 @@ Only used by differential hard disk images.
 Contains the number of seconds since January 1, 2000 00:00:00 UTC 
 +
 Only used by differential hard disk images.
-| 60 | 4 | | _*Reserved (empty values)*_
+| 60 | 4 | | *_Reserved (empty values)_*
 | 64 | 512 | | _Parent name_ +
 Contains an UTF-16 big-endian string 
 +
 Only used by differential hard disk images.
 | 576 | 8*24 = 192 | | _Array of parent locator entries_ +
 Only used by differential hard disk images.
-| 768 | 256 | | _*Reserved (empty values)*_
+| 768 | 256 | | *_Reserved (empty values)_*
 |===
 
 The maximum number of block table entries should match the maximum possible
@@ -286,8 +286,8 @@ Offset to the locator data. The offset is relative from the start of the file.
 | | |
 | `W2ku` | | Absolute Unicode (UTF-16) pathname on Windows.
 | `W2ru` | W2ru | Unicode path (UTF-16) on Windows relative to the differential disk path.
-| `Wi2k` | | _*(deprecated)*_
-| `Wi2r` | Wi2r | _*(deprecated)*_
+| `Wi2k` | | *_(deprecated)_*
+| `Wi2r` | Wi2r | *_(deprecated)_*
 |===
 
 == Block table
